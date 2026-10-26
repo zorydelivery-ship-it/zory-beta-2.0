@@ -88,10 +88,21 @@ async function cargarDatos() {
         fetchCSV(base + encodeURIComponent(ZORI_CONFIG.TAB_LOCALES)),
         fetchCSV(base + encodeURIComponent(ZORI_CONFIG.TAB_PRODUCTOS)),
       ]);
+      if (!l.length || !("id" in l[0]) || !("nombre" in l[0])) {
+        throw new Error("Google no devolvió la pestaña '" + ZORI_CONFIG.TAB_LOCALES + "' (¿hoja sin compartir o nombre de pestaña distinto?)");
+      }
+      if (!p.length || !("local" in p[0]) || !("nombre" in p[0])) {
+        throw new Error("Google no devolvió la pestaña '" + ZORI_CONFIG.TAB_PRODUCTOS + "'");
+      }
       datos = { locales: l, productos: p };
+      window.ZORI_FUENTE = "Google Sheets";
     } else throw new Error("sin sheet");
   } catch (e) {
-    if (ZORI_CONFIG.SHEET_ID) console.warn("No se pudo leer Google Sheets, uso los CSV del sitio.", e);
+    if (ZORI_CONFIG.SHEET_ID) {
+      console.warn("No se pudo leer Google Sheets, uso los CSV del sitio.", e);
+      window.ZORI_MOTIVO = String(e.message || e);
+    }
+    window.ZORI_FUENTE = "CSV de respaldo";
     try {
       const [l, p] = await Promise.all([fetchCSV("data/locales.csv"), fetchCSV("data/productos.csv")]);
       datos = { locales: l, productos: p };
@@ -351,7 +362,7 @@ async function initLocal() {
   const id = slug(new URLSearchParams(location.search).get("id") || "");
   const cont = $("#menuContainer");
   let datos;
-  try { datos = await cargarDatos(); }
+  try { datos = await cargarDatos(); window.__datos = datos; }
   catch (e) {
     cont.innerHTML = `<p class="zmsg">No pudimos cargar el menú. Revisá tu conexión e intentá de nuevo.</p>`;
     ocultarLoader(); return;
@@ -487,15 +498,26 @@ window.enviarReseñaAnonima = (event) => {
     .finally(() => { btn.textContent = "Enviar"; btn.disabled = false; });
 };
 
+/* ---------- diagnóstico: agregá ?debug=1 a la URL ---------- */
+function mostrarDebug(datos) {
+  if (!/[?&]debug=1/.test(location.search)) return;
+  const d = document.createElement("div");
+  d.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:100000;background:#111;color:#fff;font:12px/1.4 monospace;padding:8px 12px;white-space:pre-wrap";
+  d.textContent = `Fuente: ${window.ZORI_FUENTE || "caché"}\nLocales: ${datos ? datos.locales.length : "?"} · Productos: ${datos ? datos.productos.length : "?"}` +
+    (window.ZORI_MOTIVO ? `\nMotivo del respaldo: ${window.ZORI_MOTIVO}` : "") + `\nSHEET_ID: ${ZORI_CONFIG.SHEET_ID || "(vacío)"}`;
+  d.onclick = () => d.remove();
+  document.body.appendChild(d);
+}
+
 /* ---------- arranque ---------- */
 document.addEventListener("DOMContentLoaded", async () => {
   crearLoader();
   initCiudad();
   initFirebase();
   const page = document.body.dataset.page;
-  if (page === "local") return initLocal();
+  if (page === "local") { await initLocal(); return mostrarDebug(window.__datos); }
   if (page === "locales") {
-    try { initListado(await cargarDatos()); }
+    try { const d = await cargarDatos(); window.__datos = d; initListado(d); mostrarDebug(d); }
     catch (e) { $("#stores-container").innerHTML = `<p style="grid-column: span 2; text-align:center; color:#888; padding:20px;">No pudimos cargar los locales. Revisá tu conexión.</p>`; }
     ocultarLoader();
   }
