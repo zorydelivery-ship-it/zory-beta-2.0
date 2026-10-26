@@ -5,7 +5,7 @@
 const ZORI_CONFIG = {
   // Pegá acá el ID de tu Google Sheet (lo que está entre /d/ y /edit en la URL).
   // Vacío = usa los archivos data/locales.csv y data/productos.csv del sitio.
-  SHEET_ID: "",
+  SHEET_ID: "1SykSOH61COs6gVVO1yLHw69l074qPx6eSABYk3xfcF8",
   // Nombres de las pestañas en la hoja de Google
   TAB_LOCALES: "Locales",
   TAB_PRODUCTOS: "Productos",
