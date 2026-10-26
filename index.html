@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Zori Delivery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css.css">
+   <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .mobile-container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: #ffffff;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 90px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        }
+
+        /* Header */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px 10px 20px;
+        }
+
+        .logo-area h1 {
+            font-size: 1.6rem;
+            color: #ff6600;
+            margin: 0;
+            font-weight: 800;
+            font-style: italic;
+            letter-spacing: -0.5px;
+        }
+        .logo-area span {
+            font-size: 0.65rem;
+            display: block;
+            color: #333;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-top: -4px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .location-pill {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: #f1f2f6;
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #333;
+        }
+        .location-pill i {
+            color: #ff6600;
+        }
+
+        .icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #f1f2f6;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        /* Buscador */
+        .search-section {
+            padding: 10px 20px;
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 50px;
+            padding: 10px 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+        .search-box i {
+            color: #888;
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+        .search-box input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            background: transparent;
+        }
+
+        /* Botoncitos de Categorías Cuadrados */
+        .quick-categories {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 10px 20px 15px 20px;
+            scrollbar-width: none;
+        }
+        .quick-categories::-webkit-scrollbar {
+            display: none;
+        }
+        .quick-cat-card {
+            min-width: 90px;
+            height: 110px;
+            background: #ffffff;
+            border: 1px solid #eee;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            gap: 4px;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .quick-cat-card:hover, .quick-cat-card.active {
+            border-color: #ff6600;
+            background: #fff8f5;
+        }
+        
+        /* Contenedor que ajusta la imagen cuadrada a un tamaño proporcional */
+        .quick-cat-icon {
+            width: 55px;
+            height: 55px;
+            background: transparent;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .quick-cat-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .quick-cat-card span {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #333;
+            text-align: center;
+            line-height: 1;
+        }
+
+        /* Título de la sección */
+        .section-title {
+            padding: 10px 20px 5px 20px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        /* APARTADO DE SCROLL: TARJETAS GRANDES CON IMAGEN DE FONDO */
+        .promo-carousel-scroll {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding: 10px 20px 20px 20px;
+            scrollbar-width: none;
+        }
+        .promo-carousel-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        .promo-card-item {
+            min-width: 260px;   
+            height: 380px;  
+            border-radius: 24px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column; 
+            justify-content: space-between;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-decoration: none;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .promo-card-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 30px rgba(0,0,0,0.22);
+        }
+
+        .promo-card-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.6) 100%);
+            z-index: 1;
+        }
+        
+        .promo-text-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+        
+        .promo-card-item h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+
+        /* Barra de Navegación Inferior Flotante */
+        .bottom-nav {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 440px;
+            background: #ffffff;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+            z-index: 999;
+            border: 1px solid #eee;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #888;
+            font-size: 0.7rem;
+            font-weight: 600;
+            gap: 3px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .nav-item i {
+            font-size: 1.1rem;
+        }
+        .nav-item.active {
+            color: #ff6600;
+        }
+        .quick-categories a.quick-cat-card {
+    text-decoration: none; /* Elimina el subrayado del enlace */
+}
+    </style>
+</head>
+<body>
+<div class="mobile-container">
+        
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-area">
+                <h1>Zori</h1>
+                <span>DELIVERY</span>
+            </div>
+            <div class="header-right" style="position: relative;">
+                <!-- Píldora de ubicación interactiva -->
+                <div class="location-pill" id="btnUbicacion" style="cursor: pointer;">
+                    <i class="fa-solid fa-location-dot"></i> <span id="textoUbicacion">Ayolas</span>
+                    <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem; margin-left: 3px;"></i>
+                </div>
+                
+                <!-- Menú desplegable de ciudades -->
+                <div id="dropdownUbicacion" style="display: none; position: absolute; top: 45px; right: 0; background: #ffffff; border: 1px solid #eee; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.12); width: 200px; z-index: 1000; overflow: hidden; font-family: 'Poppins', sans-serif;">
+                    <div style="padding: 10px 15px; font-size: 0.75rem; font-weight: 700; color: #888; border-bottom: 1px solid #f1f2f6;">Selecciona tu ciudad</div>
+                    
+                    <!-- Ciudad activa (Ayolas) -->
+                    <div onclick="cambiarUbicacion('Ayolas', this)" style="padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; background: #fff8f5; color: #ff6600; font-size: 0.85rem; font-weight: 600;">
+                        <span>Ayolas</span>
+                        <i class="fa-solid fa-check" style="font-size: 0.8rem;"></i>
+                    </div>
+
+                    <!-- Ciudades Próximamente (Deshabilitadas / Tachadas) -->
+                    <div style="padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; opacity: 0.5; cursor: not-allowed; background: #fafafa; border-top: 1px solid #f8f9fa;">
+                        <span style="text-decoration: line-through; color: #666; font-size: 0.85rem;">Santiago</span>
+                        <span style="font-size: 0.65rem; background: #eee; color: #555; padding: 2px 6px; border-radius: 6px; font-weight: 600;">Pronto</span>
+                    </div>
+
+                    <div style="padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; opacity: 0.5; cursor: not-allowed; background: #fafafa; border-top: 1px solid #f8f9fa;">
+                        <span style="text-decoration: line-through; color: #666; font-size: 0.85rem;">San Ignacio</span>
+                        <span style="font-size: 0.65rem; background: #eee; color: #555; padding: 2px 6px; border-radius: 6px; font-weight: 600;">Pronto</span>
+                    </div>
+
+                    <div style="padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; opacity: 0.5; cursor: not-allowed; background: #fafafa; border-top: 1px solid #f8f9fa;">
+                        <span style="text-decoration: line-through; color: #666; font-size: 0.85rem;">San Juan</span>
+                        <span style="font-size: 0.65rem; background: #eee; color: #555; padding: 2px 6px; border-radius: 6px; font-weight: 600;">Pronto</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Buscador -->
+        <section class="search-section">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="search-input" placeholder="¿Qué se te antoja hoy?" onkeypress="if(event.key === 'Enter') window.location.href='locales.html';">
+            </div>
+        </section>
+
+   <!-- Botoncitos de Categorías con Imágenes Propias -->
+<div class="quick-categories">
+    <!-- Hamburguesas -->
+    <a href="en constuccion.html" target="_blank" class="quick-cat-card">
+        <div class="quick-cat-icon">
+            <img src="hamnburguesa-8.png" alt="Hamburguesas">
+        </div>
+        <span>Hamburguesas</span>
+    </a>
+
+    <!-- Supermercados -->
+    <a href="en constuccion.html" target="_blank" class="quick-cat-card">
+        <div class="quick-cat-icon">
+            <img src="supermercado-8.png" alt="Supermercados">
+        </div>
+        <span>Supermercados</span>
+    </a>
+
+    <!-- Postres -->
+    <a href="en constuccion.html" target="_blank" class="quick-cat-card">
+        <div class="quick-cat-icon">
+            <img src="postres-8.png" alt="Postres">
+        </div>
+        <span>Postres</span>
+    </a>
+
+    <!-- Bodega -->
+    <a href="en constuccion.html" target="_blank" class="quick-cat-card">
+        <div class="quick-cat-icon">
+            <img src="bodega-8.png" alt="Bodega">
+        </div>
+        <span>Bodega</span>
+    </a>
+
+    <!-- Farmacia -->
+    <a href="en constuccion.html" target="_blank" class="quick-cat-card">
+        <div class="quick-cat-icon">
+            <img src="farmacia-8.png" alt="Farmacia">
+        </div>
+        <span>Farmacia</span>
+    </a>
+
+    <!-- Varios -->
+    <a href="en constuccion.html" target="_blank" class="quick-cat-card">
+        <div class="quick-cat-icon">
+            <img src="varios-8.png" alt="Varios">
+        </div>
+        <span>Varios</span>
+    </a>
+</div>
+
+        <!-- Título -->
+        <div class="section-title">¿Qué vas a pedir hoy?</div>
+
+       <!-- APARTADO DE SCROLL: TARJETAS GRANDES CON IMAGEN DE FONDO -->
+    <section class="promo-carousel-scroll">
+        
+        <!-- Tarjeta 1: Farmacias -->
+        <a href="Farmacias.html" class="promo-card-item" style="background-image: url('https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500');">
+            <div class="promo-text-content">
+                <h3>Farmacias</h3>
+            </div>
+        </a>
+
+        <!-- Tarjeta 2: Bodegas -->
+        <a href="bodega.html" class="promo-card-item" style="background-image: url('https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=500');">
+            <div class="promo-text-content">
+                <h3>Bodega</h3>
+            </div>
+        </a>
+
+        <!-- Tarjeta 3: Restaurantes -->
+        <a href="en constuccion.html" class="promo-card-item" style="background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=500');">
+            <div class="promo-text-content">
+                <h3>Restaurantes</h3>
+            </div>
+        </a>
+
+        <!-- Tarjeta 4: Supermercados -->
+        <a href="supermercados.html" class="promo-card-item" style="background-image: url('https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=500');">
+            <div class="promo-text-content">
+                <h3>Supermercados</h3>
+            </div>
+        </a>
+
+    </section>
+
+        </section>
+
+        <!-- Barra de Navegación Inferior Flotante -->
+<nav class="bottom-nav">
+    <a href="index.html" class="nav-item active">
+        <i class="fa-solid fa-house"></i>
+        <span>Inicio</span>
+    </a>
+    <a href="locales.html" class="nav-item">
+        <i class="fa-solid fa-store"></i>
+        <span>Locales</span>
+    </a>
+    <!-- Botón de Reseña restaurado -->
+    <button class="nav-item" onclick="abrirModalReseña()">
+        <i class="fa-solid fa-comment-dots"></i>
+        <span>Reseña</span>
+    </button>
+    <!-- Botón que lleva al apartado de la ruleta -->
+    <a href="ruleta.html" class="nav-item">
+        <i class="fa-solid fa-dharmachakra"></i>
+        <span>Ruleta</span>
+    </a>
+    <a href="https://wa.me/595982309464" target="_blank" class="nav-item">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span>Ayuda</span>
+    </a>
+</nav>
+
+        <!-- Modal Reseña Anónima -->
+        <div id="modalReseña" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+            <div style="background: #ffffff; padding: 25px; border-radius: 15px; width: 90%; max-width: 400px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); text-align: left; position: relative;">
+                <div id="formContainer">
+                    <h3 style="margin-top: 0; text-align: center; color: #333;">Dejanos tu reseña</h3>
+                    <p style="text-align: center; color: #777; font-size: 0.8rem;">100% anónima</p>
+                    <form id="reseñaForm" onsubmit="enviarReseñaAnonima(event)" style="display: flex; flex-direction: column; gap: 12px;">
+                        <input type="hidden" name="_subject" value="💬 Nueva Reseña Anónima - Zory Delivery">
+                        <textarea id="mensajeReseña" name="mensaje" rows="4" placeholder="Escribe tu comentario aquí..." required style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-family: 'Poppins', sans-serif; resize: none;"></textarea>
+                        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                            <button type="button" onclick="cerrarModalReseña()" style="padding: 8px 15px; border: none; border-radius: 8px; background: #e0e0e0; cursor: pointer;">Cancelar</button>
+                            <button type="submit" id="btnEnviar" style="padding: 8px 20px; border: none; border-radius: 8px; background: #25D366; color: #fff; cursor: pointer;">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="mensajeExito" style="display: none; text-align: center; padding: 20px 0;">
+                    <div style="font-size: 3rem; color: #25D366; margin-bottom: 10px;">✓</div>
+                    <h3 style="color: #333;">¡Reseña enviada con éxito!</h3>
+                    <button onclick="cerrarModalReseña()" style="padding: 8px 25px; border: none; border-radius: 8px; background: #25D366; color: #fff; cursor: pointer;">Aceptar</button>
+                </div>
+                <button onclick="cerrarModalReseña()" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #888;">&times;</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script básico para modales en el Index -->
+    <script>
+        function abrirModalReseña() {
+            document.getElementById('formContainer').style.display = 'block';
+            document.getElementById('mensajeExito').style.display = 'none';
+            document.getElementById('mensajeReseña').value = '';
+            document.getElementById('modalReseña').style.display = 'flex';
+        }
+        function cerrarModalReseña() {
+            document.getElementById('modalReseña').style.display = 'none';
+        }
+        function enviarReseñaAnonima(event) {
+            event.preventDefault();
+            const formData = new FormData(document.getElementById('reseñaForm'));
+            const btn = document.getElementById('btnEnviar');
+            btn.innerText = 'Enviando...';
+            btn.disabled = true;
+
+            fetch('https://formsubmit.co/ajax/zorydelivery@gmail.com', { method: 'POST', body: formData })
+            .then(res => res.json())
+            .then(() => {
+                document.getElementById('formContainer').style.display = 'none';
+                document.getElementById('mensajeExito').style.display = 'block';
+                btn.innerText = 'Enviar';
+                btn.disabled = false;
+            })
+            
+            .catch(() => {
+                alert('Error al enviar. Inténtalo de nuevo.');
+                btn.innerText = 'Enviar';
+                btn.disabled = false;
+            });
+        }
+    </script>
+    <script src="js.js"></script>
+
+</body>
+</html>

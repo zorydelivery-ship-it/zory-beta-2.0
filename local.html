@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local - Zori Delivery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css.css">
+  <link rel="stylesheet" href="css/zori-app.css">
+</head>
+<body data-page="local">
+  <div class="mobile-container">
+
+    <!-- Banner del local -->
+    <section class="promo-banner">
+      <a href="locales.html" class="back-home-btn-float"><i class="fa-solid fa-store"></i> Ver más</a>
+      <img id="storeBanner" src="" alt="" onerror="this.style.visibility='hidden'">
+    </section>
+
+    <div class="zstore-head">
+      <h1 id="storeTitle">&nbsp;</h1>
+      <p id="storeHorario" hidden></p>
+    </div>
+
+    <!-- Categorías del menú (se genera sola) -->
+    <nav id="storeCats" class="zcats"></nav>
+
+    <!-- Menú (se genera solo desde la planilla) -->
+    <div id="menuContainer"></div>
+
+    <div style="text-align:center; padding:15px 0;">
+      <div class="social-icons">
+        <a href="https://www.facebook.com/share/19Axc55VUv/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://www.instagram.com/zoridelivery?igsh=MXFobTh4amJndnNyeQ%3D%3D&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://wa.me/595982309464" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+      <div class="scalat-credits" style="margin-top:12px;">Desarrollado por <span>Sclat tech</span></div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
