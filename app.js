@@ -36,7 +36,7 @@ function imgUrl(v, carpeta) {
   v = String(v || "").trim();
   if (!v) return "";
   if (/^(https?:)?\/\//.test(v) || v.startsWith("data:")) return v;
-  return `img/${carpeta}/${encodeURI(v)}`;
+  return encodeURI(v);
 }
 
 /* ---------- CSV ---------- */
@@ -104,7 +104,7 @@ async function cargarDatos() {
     }
     window.ZORI_FUENTE = "CSV de respaldo";
     try {
-      const [l, p] = await Promise.all([fetchCSV("data/locales.csv"), fetchCSV("data/productos.csv")]);
+      const [l, p] = await Promise.all([fetchCSV("locales.csv"), fetchCSV("productos.csv")]);
       datos = { locales: l, productos: p };
     } catch (e2) {
       if (cache) return cache.d; // último dato bueno
