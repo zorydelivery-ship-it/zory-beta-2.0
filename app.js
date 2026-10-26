@@ -83,16 +83,17 @@ async function cargarDatos() {
   let datos;
   try {
     if (ZORI_CONFIG.SHEET_ID) {
-      const base = `https://docs.google.com/spreadsheets/d/${ZORI_CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&sheet=`;
+      const base = `https://docs.google.com/spreadsheets/d/${ZORI_CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&headers=1&sheet=`;
       const [l, p] = await Promise.all([
         fetchCSV(base + encodeURIComponent(ZORI_CONFIG.TAB_LOCALES)),
         fetchCSV(base + encodeURIComponent(ZORI_CONFIG.TAB_PRODUCTOS)),
       ]);
       if (!l.length || !("id" in l[0]) || !("nombre" in l[0])) {
-        throw new Error("Google no devolvió la pestaña '" + ZORI_CONFIG.TAB_LOCALES + "' (¿hoja sin compartir o nombre de pestaña distinto?)");
+        throw new Error("Google no devolvió bien la pestaña '" + ZORI_CONFIG.TAB_LOCALES + "'. Columnas recibidas: " + (l.length ? Object.keys(l[0]).join(", ") : "(ninguna)"));
       }
       if (!p.length || !("local" in p[0]) || !("nombre" in p[0])) {
-        throw new Error("Google no devolvió la pestaña '" + ZORI_CONFIG.TAB_PRODUCTOS + "'");
+        throw new Error("Google no devolvió bien la pestaña '" + ZORI_CONFIG.TAB_PRODUCTOS + "'. Filas: " + p.length +
+          ". Columnas recibidas: " + (p.length ? Object.keys(p[0]).join(", ") : "(ninguna)"));
       }
       datos = { locales: l, productos: p };
       window.ZORI_FUENTE = "Google Sheets";
